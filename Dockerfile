@@ -50,6 +50,8 @@ ADD scripts/tomcat6 /etc/init.d/
 #Install BigBlueButton
 RUN su - -c "apt-get install -y bigbluebutton bbb-demo" 
 
+EXPOSE 80
+
 #Add helper script to start bbb
 ADD scripts/bbb-start.sh /usr/bin/
 
