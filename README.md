@@ -32,4 +32,15 @@ You can attach to the container while it starts and wait for it to finish, then 
 
     sudo docker attach --sig-proxy=false bbb
     
+### How to access the container
+For now it's only possible to access the BigBlueButton container using the private IP address docker has assigned to it. after you attach to the container you will see an output like the following one telling you the IP address:
+
+    *******************************************
+    Use this IP address to locally access your 
+    BigBlueButton container: 
     
+    172.17.0.2
+    
+    *******************************************
+
+Access that address from your browser and you will get to the demo page. NOTE: If you try to use the exposed ports, the bundled nginx server will show the default page instead of BigBlueButton's demo page. I'm working on this.
