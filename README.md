@@ -11,7 +11,7 @@ This image is based on Ubuntu 10.04 x86_64, which is the [officially supported O
 
 You can find a prebuilt docker image from [Docker Hub](https://registry.hub.docker.com/u/juanluisbaptiste/bigbluebutton/). To be able to use it, first it has to be pulled off from the Hub:
 
-    sudo docker pull juanluisbaptiste/bigbluebutton:0.9
+    sudo docker pull juanluisbaptiste/bigbluebutton:latest
   
 And then you can run a container from it, see instructions below on how to do it.
 
