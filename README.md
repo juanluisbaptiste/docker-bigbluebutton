@@ -44,3 +44,7 @@ For now it's only possible to access the BigBlueButton container using the priva
     *******************************************
 
 Access that address from your browser and you will get to the demo page. NOTE: If you try to use the exposed ports, the bundled nginx server will show the default page instead of BigBlueButton's demo page. I'm working on this.
+
+### TODO
+* Improve configuration so BigBlueButton can be accesed from the exposed ports.
+* Improve the way BigBlueButton services start using supervisord/systemd instead of using a custom script.
