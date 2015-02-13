@@ -28,15 +28,15 @@ This `docker` command will launch a new BigBlueButton container:
 
     sudo docker run -d --name bbb bbb_0.81
 
-This will launch the container without exposing any of BigBlueButton's service ports, so you will need to access the container's private IP adress. To be able to access the container externally (or from the docker host machine), BigBlueButton IP address configuration needs to be set to an external hostname that can be resolved, using the env variable SERVER_NAME. Start the container like this:
+This will launch the container without exposing any of BigBlueButton's service ports, so you will need to access the container's private IP adress. To be able to access the container externally (or from the docker host machine), BigBlueButton IP address configuration needs to be set to an external hostname that can be resolved, using the env variable `SERVER_NAME`. Start the container like this:
 
-    sudo docker run -d --name bbb -p 80:80 -p 9123:9123 -p 1935:1935 -e SERVER_NAME=meeting.somedomain.com bbb_0.81
+    sudo docker run -d --name bbb -p 80:80 -p 9123:9123 -p 1935:1935 -e `SERVER_NAME`=meeting.somedomain.com bbb_0.81
 
-Then you can access the container externally (provided SERVER_NAME resolves to a public IP address) using $SERVER_NAME. The hostname set in SERVER_NAME must point to the docker host machine. If you can't use the same host ports (ie: you already have a web server running on port 80) you can start the container using other ports:
+Then you can access the container externally (provided `SERVER_NAME` resolves to a public IP address) using $`SERVER_NAME`. The hostname set in `SERVER_NAME` must point to the docker host machine. If you can't use the same host ports (ie: you already have a web server running on port 80) you can start the container using other ports:
 
     sudo docker run -d --name bbb -p 80:8080 -p 9123:91230 -p 1935:19350 bbb_0.81
 
-And configure a reverse proxy server (like nginx) to go to the BigBlueButton's container private IP address and the specified port in the docker run command when accessing SERVER_NAME.
+And configure a reverse proxy server (like nginx) to go to the BigBlueButton's container private IP address and the specified port in the docker run command when accessing `SERVER_NAME`.
 
 You can attach to the container while it starts and wait for it to finish, then take the IP address from the end of the output. To attach to the container run the following `docker` command:
 
