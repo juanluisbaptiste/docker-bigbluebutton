@@ -26,7 +26,7 @@ RUN apt-get -y update
 RUN apt-get install -y libreoffice-common libreoffice
 
 #Install required Ruby version
-RUN apt-get install -y libffi5 libreadline5 libyaml-0-2
+RUN apt-get install -y libffi5 libreadline5 libyaml-0-2 libgdbm3
 RUN wget https://bigbluebutton.googlecode.com/files/ruby1.9.2_1.9.2-p290-1_amd64.deb
 RUN dpkg -i ruby1.9.2_1.9.2-p290-1_amd64.deb
 RUN update-alternatives --install /usr/bin/ruby ruby /usr/bin/ruby1.9.2 500 \
