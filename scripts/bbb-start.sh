@@ -15,6 +15,7 @@ echo -e "Updating BigBlueButton IP address configuration...\n"
 
 if [ ! -z "$SERVER_NAME" ];then
     printf '%s\t%s\n' $IP $SERVER_NAME | cat >> /etc/hosts
+    echo -e "Using $SERVER_NAME as hostname."
     IP=$SERVER_NAME
 fi
 bbb-conf --setip $IP
@@ -23,7 +24,8 @@ echo -e "Checking BigBlueButton configuration...\n"
 bbb-conf --check
 
 echo -e "*******************************************"
-echo -e "Use this address to access your \nBigBlueButton container: \n\n$IP\n"
+echo -e "Use this address to access your \nBigBlueButton container: \n\nhttp://$IP\n"
+echo -e "The container's internal IP address \nis: $CONTAINER_IP\n"
 echo -e "*******************************************\n"
 
 #Ugly hack: Infinite loop to maintain the container running
