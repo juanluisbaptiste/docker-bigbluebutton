@@ -14,11 +14,19 @@ service bbb-openoffice-headless start
 echo -e "Updating BigBlueButton IP address configuration...\n"
 
 if [ ! -z "$SERVER_NAME" ];then
-    printf '%s\t%s\n' $IP $SERVER_NAME | cat >> /etc/hosts
     echo -e "Using $SERVER_NAME as hostname."
+    #Add an entry to /etc/hosts pointing the container IP address 
+    #to $SERVER_NAME
+    printf '%s\t%s\n' $IP $SERVER_NAME | cat >> /etc/hosts    
+    CONTAINER_IP=$IP
     IP=$SERVER_NAME
 fi
 bbb-conf --setip $IP
+
+#Replace the IP address on the demo web app, it seems 
+#bbb-conf --setip doesn't do it
+echo -e "Changing IP address in demo api: $IP"
+sed -ri "s/(.*BigBlueButtonURL *= *\").*/\1http:\/\/$IP\/bigbluebutton\/\";/" /var/lib/tomcat6/webapps/demo/bbb_api_conf.jsp
 
 echo -e "Checking BigBlueButton configuration...\n"
 bbb-conf --check
