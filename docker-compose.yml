@@ -1,0 +1,14 @@
+bbb:
+  build: .
+  ports:
+#   - "80:80"
+  - "9123:9123"
+  - "1935:1935"
+  expose:
+  - "80"
+#   volumes:
+#   - "/home/juancho/git/docker/docker-otrs/otrs/backup:/var/otrs/backups"
+  environment:
+      SERVER_NAME: meet.apukay.com
+      #For nginx proxy
+      VIRTUAL_HOST: meet.apukay.com
