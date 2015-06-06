@@ -23,7 +23,7 @@ RUN dpkg -i openoffice.org_1.0.4_all.deb
 RUN apt-get install -y python-software-properties
 RUN apt-add-repository ppa:libreoffice/libreoffice-4-0
 RUN apt-get -y update
-RUN apt-get install -y libreoffice-common libreoffice
+RUN apt-get install -y --allow-unauthenticated libreoffice-common libreoffice
 
 #Install required Ruby version
 RUN apt-get install -y libffi5 libreadline5 libyaml-0-2 libgdbm3
@@ -38,8 +38,9 @@ RUN update-alternatives --install /usr/bin/gem gem /usr/bin/gem1.9.2 500
 
 #Install ffmpeg
 RUN apt-get install -y build-essential git-core checkinstall yasm texi2html libvorbis-dev libx11-dev libxfixes-dev zlib1g-dev pkg-config
-ADD deb/ffmpeg_5:2.0.1-1_amd64.deb .
-RUN dpkg -i ffmpeg_5:2.0.1-1_amd64.deb
+ADD deb/ffmpeg_5:2.0.1-1_amd64.deb /tmp/
+RUN dpkg -i /tmp/ffmpeg_5:2.0.1-1_amd64.deb
+RUN rm -f /tmp/*.deb
 
 #Install Tomcat prior to bbb installation
 RUN apt-get install -y tomcat6
@@ -48,6 +49,7 @@ RUN apt-get install -y tomcat6
 ADD scripts/tomcat6 /etc/init.d/
 
 #Install BigBlueButton
+RUN apt-get -y update
 RUN su - -c "apt-get install -y bigbluebutton bbb-demo" 
 
 EXPOSE 80 9123 1935
