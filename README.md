@@ -42,7 +42,8 @@ You can attach to the container while it starts and wait for it to finish, then 
 
     sudo docker attach --sig-proxy=false bbb
 
-If you want the demo package installed then also set BBB_INSTALL_DEMOS=yes on the docker run command.
+### Installing the demo package
+If you want the demo package installed then also set `BBB_INSTALL_DEMOS=yes` on the docker run command.
 
 ### How to access the container
 After you attach to the container you will see an output like the following one telling you how to access the container:
