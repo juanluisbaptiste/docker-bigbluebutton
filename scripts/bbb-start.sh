@@ -2,11 +2,20 @@
 # Little helper start script for BigBlueButton in a docker container.
 # Author: Juan Luis Baptiste <juan.baptiste@gmail.com>
 
+DEFAULT_BBB_INSTALL_DEMOS="no"
+
 function get_ip (){
     /sbin/ifconfig eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}'
 }
 
 IP=`get_ip`
+
+[ -z "${BBB_INSTALL_DEMOS}" ] && BBB_INSTALL_DEMOS=$DEFAULT_BBB_INSTALL_DEMOS && echo -e "BBB_INSTALL_DEMOS not set, setting it to '$DEFAULT_BBB_INSTALL_DEMOS'\n"
+
+if [ "$BBB_INSTALL_DEMOS" == "True" ]; then
+    echo -e "Installing BigBlueButton demo package...\n"
+    DEBIAN_FRONTEND=noninteractive apt-get install -y bbb-demo
+fi
 
 echo -e "Starting BigBlueButton services...\n"
 service redis-server-2.2.4 start

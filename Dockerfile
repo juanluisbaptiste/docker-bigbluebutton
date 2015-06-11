@@ -51,7 +51,7 @@ ADD scripts/tomcat6 /etc/init.d/
 
 #Install BigBlueButton
 RUN apt-get -y update
-RUN su - -c "apt-get install -y bigbluebutton bbb-demo" 
+RUN su - -c "apt-get install -y bigbluebutton" 
 
 EXPOSE 80 9123 1935
 
