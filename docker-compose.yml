@@ -1,13 +1,11 @@
 bbb:
   build: .
   ports:
-#   - "80:80"
+  - "80:80"
   - "9123:9123"
   - "1935:1935"
   expose:
   - "80"
-#   volumes:
-#   - "/home/juancho/git/docker/docker-otrs/otrs/backup:/var/otrs/backups"
   environment:
       SERVER_NAME: meet.example.com
       BBB_INSTALL_DEMOS: yes
