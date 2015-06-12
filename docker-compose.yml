@@ -9,7 +9,5 @@ bbb:
 #   volumes:
 #   - "/home/juancho/git/docker/docker-otrs/otrs/backup:/var/otrs/backups"
   environment:
-      SERVER_NAME: meet.apukay.com
-      #For nginx proxy
-      VIRTUAL_HOST: meet.apukay.com
+      SERVER_NAME: meet.example.com
       BBB_INSTALL_DEMOS: yes
