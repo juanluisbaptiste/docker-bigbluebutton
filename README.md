@@ -45,6 +45,9 @@ You can attach to the container while it starts and wait for it to finish, then 
 ### Installing the demo package
 If you want the demo package installed then also set `BBB_INSTALL_DEMOS=yes` on the docker run command.
 
+### Setting the server Salt
+You can use `SERVER_SALT` enviromenment variable to set the server's salt secret for 3rd party apps authentication.
+
 ### How to access the container
 After you attach to the container you will see an output like the following one telling you how to access the container:
 
