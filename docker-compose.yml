@@ -8,4 +8,6 @@ bbb:
   - "80"
   environment:
       SERVER_NAME: meet.example.com
+      #SERVER_SALT: 5ca422de042242086336aa041f26d79e
+      VIRTUAL_HOST: meet.example.com
       BBB_INSTALL_DEMOS: yes

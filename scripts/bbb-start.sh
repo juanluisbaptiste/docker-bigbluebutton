@@ -31,6 +31,7 @@ if [ ! -z "$SERVER_NAME" ];then
     IP=$SERVER_NAME
 fi
 bbb-conf --setip $IP
+[ ! -z $SERVER_SALT ] && echo -e "Setting Salt to: $SERVER_SALT" && bbb-conf --setsecret $SERVER_SALT
 
 #Replace the IP address on the demo web app, it seems 
 #bbb-conf --setip doesn't do it
