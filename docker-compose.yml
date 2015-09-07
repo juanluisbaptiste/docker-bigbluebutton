@@ -16,7 +16,7 @@ bbb:
   - "1935:1935"  
   environment:
       SERVER_NAME: meet.example.com
-      #SERVER_SALT: 5ca422de042242086336aa041f26d79e
+      MOBILE_SALT: 03b07
       VIRTUAL_HOST: meet.example.com
       BBB_INSTALL_DEMOS: "yes"
 #  privileged: true
