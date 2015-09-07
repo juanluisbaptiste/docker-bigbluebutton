@@ -10,20 +10,11 @@ function get_ip (){
 
 IP=`get_ip`
 
-if [ -z "${BBB_INSTALL_DEMOS}" ]; then
-  echo -e "BBB_INSTALL_DEMOS not set, setting it to '$DEFAULT_BBB_INSTALL_DEMOS'\n"
-  BBB_INSTALL_DEMOS=$DEFAULT_BBB_INSTALL_DEMOS
-fi
-
-echo -e "Changing IP address in demo API: $IP"
-sed -ri "s/(.*BigBlueButtonURL *= *\").*/\1http:\/\/$IP\/bigbluebutton\/\";/" /var/lib/tomcat6/webapps/demo/bbb_api_conf.jsp
-#Set the mobile salt to enable mobile access
-echo -e "Setting mobile salt: $MOBILE_SALT"
-sed -ri "s/(.*mobileSalt *= *\").*/\1$MOBILE_SALT\";/" /var/lib/tomcat6/webapps/demo/mobile_conf.jsp
-
-if [ "$BBB_INSTALL_DEMOS" == "True" ]; then
-    echo -e "Installing BigBlueButton demo package...\n"
+if [ ! -z $BBB_INSTALL_DEMOS -a "$BBB_INSTALL_DEMOS" == "yes" ]; then
+    echo -e "\n\e[92mInstalling BigBlueButton demo package...\n\e[0m"
     DEBIAN_FRONTEND=noninteractive apt-get install -y bbb-demo
+    [ $? -gt 0 ] && echo - "ERROR: Could not intall the demos." && exit 1
+    echo -e "\n\e[92mDone.\e[0m\n"
 fi
 
 echo -e "Starting BigBlueButton services...\n"
