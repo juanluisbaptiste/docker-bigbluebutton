@@ -17,13 +17,13 @@ if [ ! -z $BBB_INSTALL_DEMOS -a "$BBB_INSTALL_DEMOS" == "yes" ]; then
     echo -e "\n\e[92mDone.\e[0m\n"
 fi
 
-echo -e "Starting BigBlueButton services...\n"
+echo -e "\n\e[92mStarting BigBlueButton services...\n\e[0m"
 service redis-server-2.2.4 start
 service bbb-openoffice-headless start
-echo -e "Updating BigBlueButton IP address configuration...\n"
+echo -e "\n\e[92mUpdating BigBlueButton IP address configuration...\n\e[0m"
 
 if [ ! -z "$SERVER_NAME" ];then
-    echo -e "Using $SERVER_NAME as hostname."
+    echo -e "\n\e[92mUsing $SERVER_NAME as hostname.\e[0m"
     #Add an entry to /etc/hosts pointing the container IP address 
     #to $SERVER_NAME
     printf '%s\t%s\n' $IP $SERVER_NAME | cat >> /etc/hosts    
@@ -31,23 +31,29 @@ if [ ! -z "$SERVER_NAME" ];then
     IP=$SERVER_NAME
 fi
 bbb-conf --setip $IP
-[ ! -z $SERVER_SALT ] && echo -e "Setting Salt to: $SERVER_SALT" && bbb-conf --setsecret $SERVER_SALT
+echo -e "\n\e[92mChanging IP address in demo API:\e[0m $IP"
+sed -ri "s/(.*BigBlueButtonURL *= *\").*/\1http:\/\/$IP\/bigbluebutton\/\";/" /var/lib/tomcat6/webapps/demo/bbb_api_conf.jsp
+#Set the mobile salt to enable mobile access
+echo -e "\n\e[92mSetting mobile salt:\e[0m $MOBILE_SALT"
+sed -ri "s/(.*mobileSalt *= *\").*/\1$MOBILE_SALT\";/" /var/lib/tomcat6/webapps/demo/mobile_conf.jsp
+
+[ ! -z $SERVER_SALT ] && echo -e "\n\e[92mSetting Salt to:\e[0m $SERVER_SALT" && bbb-conf --setsecret $SERVER_SALT
 
 #Replace the IP address on the demo web app, it seems 
 #bbb-conf --setip doesn't do it
 
 #For some reason sometimes meetings fail when started from mconf-web
 #until we clean the installation
-echo -e "Cleaning configuration...\n"
+echo -e "\n\e[92mCleaning configuration...\n\e[0m"
 bbb-conf --clean
 
-echo -e "Checking configuration...\n"
-bbb-conf --check
+#echo -e "\n\e[92mChecking configuration...\n"
+#bbb-conf --check
 
-echo -e "*******************************************"
-echo -e "Use this address to access your \nBigBlueButton container: \n\nhttp://$IP\n"
-echo -e "The container's internal IP address \nis: $CONTAINER_IP\n"
-echo -e "*******************************************\n"
+echo -e "\n\e[92m*******************************************\e[0m"
+echo -e "\n\e[0mUse this address to access your \nBigBlueButton container:\e[92m \n\nhttp://$IP\n\e[0m"
+echo -e "\n\e[0mThe container's internal IP address \nis:\e[92m $CONTAINER_IP\n\e[0m"
+echo -e "\n\e[92m*******************************************\e[0m\n"
 
 #Ugly hack: Infinite loop to maintain the container running
 while true;do sleep 100000;done
