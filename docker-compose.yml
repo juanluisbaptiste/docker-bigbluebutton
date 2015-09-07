@@ -1,11 +1,19 @@
+#nginx:
+  #image: jwilder/nginx-proxy:latest
+  #  build: nginx/
+  #  ports: 
+  #    - "80:80"
+  #  volumes:
+  #    - /var/run/docker.sock:/tmp/docker.sock
+
 bbb:
   build: .
   ports:
-  - "80:80"
-  - "9123:9123"
-  - "1935:1935"
+   - "80:80"
   expose:
-  - "80"
+  #- "80"
+  - "9123:9123"
+  - "1935:1935"  
   environment:
       SERVER_NAME: meet.example.com
       #SERVER_SALT: 5ca422de042242086336aa041f26d79e
