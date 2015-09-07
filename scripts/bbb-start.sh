@@ -10,7 +10,16 @@ function get_ip (){
 
 IP=`get_ip`
 
-[ -z "${BBB_INSTALL_DEMOS}" ] && BBB_INSTALL_DEMOS=$DEFAULT_BBB_INSTALL_DEMOS && echo -e "BBB_INSTALL_DEMOS not set, setting it to '$DEFAULT_BBB_INSTALL_DEMOS'\n"
+if [ -z "${BBB_INSTALL_DEMOS}" ]; then
+  echo -e "BBB_INSTALL_DEMOS not set, setting it to '$DEFAULT_BBB_INSTALL_DEMOS'\n"
+  BBB_INSTALL_DEMOS=$DEFAULT_BBB_INSTALL_DEMOS
+fi
+
+echo -e "Changing IP address in demo API: $IP"
+sed -ri "s/(.*BigBlueButtonURL *= *\").*/\1http:\/\/$IP\/bigbluebutton\/\";/" /var/lib/tomcat6/webapps/demo/bbb_api_conf.jsp
+#Set the mobile salt to enable mobile access
+echo -e "Setting mobile salt: $MOBILE_SALT"
+sed -ri "s/(.*mobileSalt *= *\").*/\1$MOBILE_SALT\";/" /var/lib/tomcat6/webapps/demo/mobile_conf.jsp
 
 if [ "$BBB_INSTALL_DEMOS" == "True" ]; then
     echo -e "Installing BigBlueButton demo package...\n"
@@ -35,10 +44,13 @@ bbb-conf --setip $IP
 
 #Replace the IP address on the demo web app, it seems 
 #bbb-conf --setip doesn't do it
-echo -e "Changing IP address in demo api: $IP"
-sed -ri "s/(.*BigBlueButtonURL *= *\").*/\1http:\/\/$IP\/bigbluebutton\/\";/" /var/lib/tomcat6/webapps/demo/bbb_api_conf.jsp
 
-echo -e "Checking BigBlueButton configuration...\n"
+#For some reason sometimes meetings fail when started from mconf-web
+#until we clean the installation
+echo -e "Cleaning configuration...\n"
+bbb-conf --clean
+
+echo -e "Checking configuration...\n"
 bbb-conf --check
 
 echo -e "*******************************************"
