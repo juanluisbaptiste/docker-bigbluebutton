@@ -11,16 +11,16 @@ function get_ip (){
 IP=`get_ip`
 
 if [ ! -z $BBB_INSTALL_DEMOS -a "$BBB_INSTALL_DEMOS" == "yes" ]; then
-    echo -e "\n\e[92mInstalling BigBlueButton demo package...\n\e[0m"
+    echo -e "\e[92mInstalling BigBlueButton demo package...\n\e[0m"
     DEBIAN_FRONTEND=noninteractive apt-get install -y bbb-demo
     [ $? -gt 0 ] && echo - "ERROR: Could not intall the demos." && exit 1
-    echo -e "\n\e[92mDone.\e[0m\n"
+    echo -e "\e[92mDone.\e[0m\n"
 fi
 
-echo -e "\n\e[92mStarting BigBlueButton services...\n\e[0m"
+echo -e "\e[92mStarting BigBlueButton services...\e[0m"
 service redis-server-2.2.4 start
 service bbb-openoffice-headless start
-echo -e "\n\e[92mUpdating BigBlueButton IP address configuration...\n\e[0m"
+echo -e "\e[92mUpdating BigBlueButton IP address configuration...\e[0m"
 
 if [ ! -z "$SERVER_NAME" ];then
     echo -e "\n\e[92mUsing $SERVER_NAME as hostname.\e[0m"
