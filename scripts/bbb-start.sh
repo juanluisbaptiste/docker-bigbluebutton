@@ -37,9 +37,11 @@ bbb-conf --setip $IP
 #bbb-conf --setip doesn't do it
 echo -e "\n\e[92mChanging IP address in demo API:\e[0m $IP"
 sed -ri "s/(.*BigBlueButtonURL *= *\").*/\1http:\/\/$IP\/bigbluebutton\/\";/" /var/lib/tomcat6/webapps/demo/bbb_api_conf.jsp
+#It seems that some times bbb-conf --setsecret doesn't set the secret on the demo api conf file.
+sed -ri "s/(.*salt *= *\").*/\1$SERVER_SALT\";/" /var/lib/tomcat6/webapps/demo/bbb_api_conf.jsp
 #Set the mobile salt to enable mobile access
-echo -e "\n\e[92mSetting mobile salt:\e[0m $MOBILE_SALT"
-sed -ri "s/(.*mobileSalt *= *\").*/\1$MOBILE_SALT\";/" /var/lib/tomcat6/webapps/demo/mobile_conf.jsp
+[ ! -z $MOBILE_SALT ] && echo -e "\n\e[92mSetting mobile salt to:\e[0m $MOBILE_SALT"
+[ ! -z $MOBILE_SALT ] && sed -ri "s/(.*mobileSalt *= *\").*/\1$MOBILE_SALT\";/" /var/lib/tomcat6/webapps/demo/mobile_conf.jsp
 
 [ ! -z $SERVER_SALT ] && echo -e "\n\e[92mSetting Salt to:\e[0m $SERVER_SALT" && bbb-conf --setsecret $SERVER_SALT
 
