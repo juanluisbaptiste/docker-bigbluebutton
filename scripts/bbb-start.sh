@@ -30,7 +30,11 @@ if [ ! -z "$SERVER_NAME" ];then
     CONTAINER_IP=$IP
     IP=$SERVER_NAME
 fi
+
+#Set new hostname
 bbb-conf --setip $IP
+#Replace the IP address on the demo web app, it seems 
+#bbb-conf --setip doesn't do it
 echo -e "\n\e[92mChanging IP address in demo API:\e[0m $IP"
 sed -ri "s/(.*BigBlueButtonURL *= *\").*/\1http:\/\/$IP\/bigbluebutton\/\";/" /var/lib/tomcat6/webapps/demo/bbb_api_conf.jsp
 #Set the mobile salt to enable mobile access
