@@ -45,8 +45,8 @@ sed -ri "s/(.*salt *= *\").*/\1$SERVER_SALT\";/" /var/lib/tomcat6/webapps/demo/b
 
 [ ! -z $SERVER_SALT ] && echo -e "\n\e[92mSetting Salt to:\e[0m $SERVER_SALT" && bbb-conf --setsecret $SERVER_SALT
 
-#Replace the IP address on the demo web app, it seems 
-#bbb-conf --setip doesn't do it
+#Fix permissions when using a volume container
+chown -R tomcat6:tomcat6 /var/bigbluebutton
 
 #For some reason sometimes meetings fail when started from mconf-web
 #until we clean the installation
