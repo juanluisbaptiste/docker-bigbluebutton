@@ -1,0 +1,22 @@
+bbb:
+  build: .
+  ports:
+  - "80:80"
+#  expose:
+  #- "80"
+  - "9123:9123"
+  - "1935:1935"
+  - "5060:5060"
+  - "5066:5066"  
+  - "5060:5060/udp"
+  - "5066:5066/udp"
+  #- "16384-32768:16384-32768"
+  - "7443:7443"
+  environment:
+      SERVER_NAME: bbb.example.com
+      SERVER_SALT: 5ca422de042242086336aa041f26d79e
+      MOBILE_SALT: 03b07
+      VIRTUAL_HOST: bbb.example.com
+      BBB_INSTALL_DEMOS: "yes"
+      DEBUG: "yes"
+  privileged: true
