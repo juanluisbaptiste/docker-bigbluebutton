@@ -15,7 +15,6 @@ You can find a prebuilt docker image from [Docker Hub](https://registry.hub.dock
   
 Or you can build it as described below. Then you can run a container from it, also see instructions below on how to do it.
 
-This is still an **alpha version** use it at your own risk. There is still some stuff about how to handle the different services that conform the BigBlueButton app inside the docker container that need to be improved.
 
 ### Build Instructions
 After you clone this repository you need to build the image with the `docker` command like this:
