@@ -1,0 +1,47 @@
+notify:
+  email:
+    recipients:
+      - juan.baptiste@gmail.com
+    from: $$SMTP_FROM
+    host: $$SMTP_HOST
+    port: $$SMTP_PORT
+    username: $$SMTP_USERNAME
+    password: $$SMTP_PASSWORD
+publish:
+  docker:
+    username: $$DOCKER_USER
+    password: $$DOCKER_PASSWORD
+    email: $$DOCKER_EMAIL
+    repo: $$DOCKER_USER/bigbluebutton
+    tag:
+      - latest
+    file: Dockerfile
+    load: docker/image.tar
+    save:
+      destination: docker/image.tar
+      tag: latest
+    environment:
+      - DOCKER_LAUNCH_DEBUG=true
+  #Temporal fix while running on CentOS
+  #storage_driver: vfs
+  cache:
+    mount:
+      - docker/image.tar
+  docker:
+    username: $$DOCKER_USER
+    password: $$DOCKER_PASSWORD
+    email: $$DOCKER_EMAIL
+    repo: $$DOCKER_USER/bigbluebutton-proxy
+    tag:
+      - latest
+    file: nginx/Dockerfile
+    context: nginx
+    load: docker/image.tar
+    save:
+      destination: docker/image.tar
+      tag: latest
+    environment:
+      - DOCKER_LAUNCH_DEBUG=true
+  cache:
+    mount:
+      - docker/image.tar
