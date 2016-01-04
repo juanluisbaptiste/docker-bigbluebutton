@@ -126,18 +126,18 @@ RUN apt-get install -y acl at-spi2-core authbind binutils build-essential ca-cer
   unixodbc uno-libs3 unzip update-notifier-common ure vorbis-tools x11-common \
   x11-utils xauth xfonts-encodings xfonts-mathml xfonts-utils zip zlib1g-dev
 
-RUN apt-get install -y bbb-apps bbb-apps-deskshare bbb-apps-sip bbb-apps-video \ 
-    bbb-client bbb-freeswitch bbb-red5 bbb-mkclean bbb-office bbb-playback-presentation \ 
+RUN apt-get install -y bbb-apps bbb-apps-deskshare bbb-apps-sip bbb-apps-video \
+    bbb-client bbb-freeswitch bbb-red5 bbb-mkclean bbb-office bbb-playback-presentation \
     bbb-record-core  bbb-swftools
-#Install a modified bbb-web package, the default postinst script tries to 
+#Install a modified bbb-web package, the default postinst script tries to
 #start tomcat, making the package installation fail thus breaking the install process.
 ADD deb/bbb-web_0.9.0-1ubuntu66~jlb_all.deb .
 RUN dpkg -i bbb-web_0.9.0-1ubuntu66~jlb_all.deb
 RUN apt-get install -y bbb-config bbb-check haveged
 #   bigbluebutton
-  
+
 RUN rm -fr /usr/sbin/policy-rc.d
-RUN bbb-conf --enablewebrtc
+#RUN bbb-conf --enablewebrtc
 
 #EXPOSE 80 9123 1935 5060 5060/udp 5066 5066/udp 5080 5080/udp 16384-32768/udp
 EXPOSE 80 9123 1935
