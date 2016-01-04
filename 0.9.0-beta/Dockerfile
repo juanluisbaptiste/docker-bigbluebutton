@@ -24,7 +24,7 @@ RUN update-locale LANG=en_US.UTF-8
 RUN dpkg-reconfigure locales
 
 RUN apt-get install -y software-properties-common
-RUN add-apt-repository ppa:libreoffice/libreoffice-4-3
+RUN add-apt-repository ppa:libreoffice/libreoffice-4-4
 
 #Install ffmpeg
 #RUN apt-get install -y build-essential git-core checkinstall yasm texi2html libvorbis-dev libx11-dev libxfixes-dev zlib1g-dev pkg-config
