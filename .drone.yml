@@ -16,7 +16,7 @@ publish:
     tag:
       - latest
     file: 0.9.0-beta/Dockerfile
-    context: 0.9.0-beta
+    context: 0.9.0-beta/
     load: docker/image.tar
     save:
       destination: docker/image.tar
