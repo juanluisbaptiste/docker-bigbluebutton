@@ -10,7 +10,7 @@ DEFAULT_BBB_INSTALL_DEMOS="no"
 [ -z "${DEBUG}" ] && DEBUG=$DEFAULT_DEBUG
 if [ ! -z "${DEBUG}" -a "${DEBUG}" == "yes" ]; then
     echo -e "\e[92mPreparing debug mode...\n\e[0m"
-    DEBIAN_FRONTEND=noninteractive apt-get install -y nmap lsof telnet
+    DEBIAN_FRONTEND=noninteractive apt-get install -y nmap lsof telnet bbb-check
     [ $? -gt 0 ] && echo - "ERROR: Could not intall tools." && exit 1
     echo -e "\e[92mDone.\e[0m\n"
     set -x
@@ -36,7 +36,7 @@ echo -e "\e[92mUpdating BigBlueButton IP address configuration...\e[0m"
 
 if [ ! -z "$SERVER_NAME" ];then
     echo -e "\n\e[92mUsing $SERVER_NAME as hostname.\e[0m"
-    #Add an entry to /etc/hosts pointing the container IP address 
+    #Add an entry to /etc/hosts pointing the container IP address
     #to $SERVER_NAME
     printf '%s\t%s\n' $IP $SERVER_NAME | cat >> /etc/hosts
     #printf '%s\t%s\n' 127.0.0.1 $SERVER_NAME | cat >> /etc/hosts
@@ -66,7 +66,7 @@ bbb-conf --setip $IP
 #sed -i -r "/ext-sip-ip/s/(.*value*[=,:] *\").*/\1\$\$\{external_sip_ip\}\"\/>/" /opt/freeswitch/conf/sip_profiles/external.xml
 #sed -i -r "s/(.*proxy_pass http:\/\/*).*/\1${CONTAINER_IP}:5066;/" /etc/bigbluebutton/nginx/sip.nginx
 
-#Replace the IP address on the demo web app, it seems 
+#Replace the IP address on the demo web app, it seems
 #bbb-conf --setip doesn't do it
 echo -e "\n\e[92mChanging IP address in demo API:\e[0m $IP"
 sed -ri "s/(.*BigBlueButtonURL *= *\").*/\1http:\/\/$IP\/bigbluebutton\/\";/" /var/lib/tomcat7/webapps/demo/bbb_api_conf.jsp
