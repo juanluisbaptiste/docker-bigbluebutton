@@ -1,8 +1,7 @@
 nginx:
   #image: jwilder/nginx-proxy:latest
   build: nginx/
-  ports: 
+  ports:
     - "80:80"
   volumes:
     - /var/run/docker.sock:/tmp/docker.sock
-
