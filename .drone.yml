@@ -15,6 +15,7 @@ publish:
     repo: $$DOCKER_USER/bigbluebutton
     tag:
       - latest
+      - 0.8.1-$${COMMIT:0:8}
     file: Dockerfile
     load: docker/image.tar
     save:
