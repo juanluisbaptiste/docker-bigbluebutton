@@ -10,14 +10,12 @@ bbb:
   build: .
   ports:
    - "80:80"
-  expose:
-  #- "80"
-  - "9123:9123"
-  - "1935:1935"
+   - "9123:9123"
+   - "1935:1935"
+   - "16384-16380/udp"
   environment:
       SERVER_NAME: meet.example.com
       SERVER_SALT: 5ca422de042242086336aa041f26d79e
-      MOBILE_SALT: 03b07
       VIRTUAL_HOST: meet.example.com
       BBB_INSTALL_DEMOS: "yes"
-#  privileged: true
+  privileged: true
