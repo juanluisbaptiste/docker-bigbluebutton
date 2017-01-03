@@ -27,11 +27,6 @@ ln -s /dev/stdout /var/log/bigbluebutton/bbb-rap-worker.log
 
 echo -e "\e[92mStarting BigBlueButton services...\e[0m"
 service redis-server start
-#service bbb-openoffice-headless start
-#sudo -u bigbluebutton /usr/bin/bbb-apps-akka&
-#sudo -u bigbluebutton /usr/bin/bbb-fsesl-akka&
-#service bbb-apps-akka start
-#service bbb-fsesl-akka start
 [ -d /var/run/bbb-apps-akka ] || install -m 755 -o bigbluebutton -g bigbluebutton -d /var/run/bbb-apps-akka
 cd /usr/share/bbb-apps-akka
 exec sudo -u bigbluebutton bin/bbb-apps-akka&
@@ -59,9 +54,6 @@ echo -e "\n\e[92mChanging IP address in demo API:\e[0m $IP"
 sed -ri "s/(.*BigBlueButtonURL *= *\").*/\1http:\/\/$IP\/bigbluebutton\/\";/" /var/lib/tomcat7/webapps/demo/bbb_api_conf.jsp
 #It seems that some times bbb-conf --setsecret doesn't set the secret on the demo api conf file.
 sed -ri "s/(.*salt *= *\").*/\1$SERVER_SALT\";/" /var/lib/tomcat7/webapps/demo/bbb_api_conf.jsp
-#Set the mobile salt to enable mobile access
-#[ ! -z $MOBILE_SALT ] && echo -e "\n\e[92mSetting mobile salt to:\e[0m $MOBILE_SALT"
-#[ ! -z $MOBILE_SALT ] && sed -ri "s/(.*mobileSalt *= *\").*/\1$MOBILE_SALT\";/" /var/lib/tomcat6/webapps/demo/mobile_conf.jsp
 
 [ ! -z $SERVER_SALT ] && echo -e "\n\e[92mSetting Salt to:\e[0m $SERVER_SALT" && bbb-conf --setsecret $SERVER_SALT
 
