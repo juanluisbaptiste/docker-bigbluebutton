@@ -34,7 +34,6 @@ exec sudo -u bigbluebutton bin/bbb-apps-akka&
 set_var "bbb.sip.app.ip" "127.0.0.1" /usr/share/red5/webapps/sip/WEB-INF/bigbluebutton-sip.properties
 set_var "freeswitch.ip" "127.0.0.1" /usr/share/red5/webapps/sip/WEB-INF/bigbluebutton-sip.properties
 
-bbb-conf --start
 echo -e "\e[92mUpdating BigBlueButton IP address configuration...\e[0m"
 
 if [ ! -z "$SERVER_NAME" ];then
@@ -63,6 +62,7 @@ chown -R tomcat7:tomcat7 /var/bigbluebutton
 #For some reason sometimes meetings fail when started from mconf-web
 #until we clean the installation
 bbb-conf --enablewebrtc
+bbb-conf --start
 echo -e "\n\e[92mCleaning configuration...\n\e[0m"
 bbb-conf --clean
 
