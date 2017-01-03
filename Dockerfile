@@ -21,7 +21,7 @@ RUN echo "deb http://us.archive.ubuntu.com/ubuntu/ trusty multiverse" | tee -a /
     apt-get -y dist-upgrade && \
     update-locale LANG=en_US.UTF-8 && \
     dpkg-reconfigure locales && \
-    apt-get install -y --allow-unauthenticated libvpx1 libvorbisenc2 libssl1.0.2 && \
+    apt-get install -y libvpx1 libvorbisenc2 libssl1.0.2 && \
     dpkg -i ffmpeg_2.3.3-1_amd64.deb
 
 #Install ffmpeg
@@ -35,7 +35,7 @@ ADD scripts/tomcat7 /etc/init.d/
 #RUN bash -c "echo -e '#!/bin/bash\nexit 101' | install -m 755 /dev/stdin /usr/sbin/policy-rc.d"
 #Install BigBlueButton
 # #RUN apt-get update -y
-RUN apt-get install -y --allow-unauthenticated bigbluebutton
+RUN apt-get install -y bigbluebutton
 
 #RUN mkdir /var/log/bigbluebutton && touch /var/log/bigbluebutton/bbb-1.0-recording-update.log
 RUN apt-get install -y bbb-check haveged
