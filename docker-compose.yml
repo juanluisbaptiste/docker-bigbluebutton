@@ -12,7 +12,7 @@ bbb:
    - "80:80"
    - "9123:9123"
    - "1935:1935"
-   - "16384-16380/udp"
+   - "16384-16400:16384-16400/udp"
   environment:
       SERVER_NAME: meet.example.com
       SERVER_SALT: 5ca422de042242086336aa041f26d79e
