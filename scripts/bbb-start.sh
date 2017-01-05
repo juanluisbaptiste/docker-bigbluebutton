@@ -33,6 +33,7 @@ exec sudo -u bigbluebutton bin/bbb-apps-akka&
 
 set_var "bbb.sip.app.ip" "127.0.0.1" /usr/share/red5/webapps/sip/WEB-INF/bigbluebutton-sip.properties
 set_var "freeswitch.ip" "127.0.0.1" /usr/share/red5/webapps/sip/WEB-INF/bigbluebutton-sip.properties
+sed -i "s/<X-PRE-PROCESS cmd=\"set\" data=\"local_ip_v4=*/<\!--<X-PRE-PROCESS cmd=\"set\" data=\"local_ip_v4=/; /<X-PRE-PROCESS cmd=\"set\" data=\"local_ip_v4=*/s/\"\/>/\"\/>-->/" /opt/freeswitch/conf/vars.xml
 
 echo -e "\e[92mUpdating BigBlueButton IP address configuration...\e[0m"
 
