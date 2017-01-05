@@ -17,17 +17,8 @@ publish:
       - latest
       - 0.8.1-$${COMMIT:0:8}
     file: Dockerfile
-    load: docker/image.tar
-    save:
-      destination: docker/image.tar
-      tag: latest
     environment:
       - DOCKER_LAUNCH_DEBUG=true
-  #Temporal fix while running on CentOS
-  #storage_driver: vfs
-  cache:
-    mount:
-      - docker/image.tar
   docker:
     username: $$DOCKER_USER
     password: $$DOCKER_PASSWORD
@@ -37,10 +28,6 @@ publish:
       - latest
     file: nginx/Dockerfile
     context: nginx
-    load: docker/image.tar
-    save:
-      destination: docker/image.tar
-      tag: latest
     environment:
       - DOCKER_LAUNCH_DEBUG=true
   cache:
