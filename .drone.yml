@@ -30,6 +30,3 @@ publish:
     context: nginx
     environment:
       - DOCKER_LAUNCH_DEBUG=true
-  cache:
-    mount:
-      - docker/image.tar
