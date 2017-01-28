@@ -33,7 +33,12 @@ exec sudo -u bigbluebutton bin/bbb-apps-akka&
 
 set_var "bbb.sip.app.ip" "127.0.0.1" /usr/share/red5/webapps/sip/WEB-INF/bigbluebutton-sip.properties
 set_var "freeswitch.ip" "127.0.0.1" /usr/share/red5/webapps/sip/WEB-INF/bigbluebutton-sip.properties
-sed -i "s/<X-PRE-PROCESS cmd=\"set\" data=\"local_ip_v4=*/<\!--<X-PRE-PROCESS cmd=\"set\" data=\"local_ip_v4=/; /<X-PRE-PROCESS cmd=\"set\" data=\"local_ip_v4=*/s/\"\/>/\"\/>-->/" /opt/freeswitch/conf/vars.xml
+#sed -i "s/<X-PRE-PROCESS cmd=\"set\" data=\"local_ip_v4=*/<\!--<X-PRE-PROCESS cmd=\"set\" data=\"local_ip_v4=/; /<X-PRE-PROCESS cmd=\"set\" data=\"local_ip_v4=*/s/\"\/>/\"\/>-->/" /opt/freeswitch/conf/vars.xml
+#set_var "bind_server_ip" "${CONTAINER_IP}\"\/>" /opt/freeswitch/conf/vars.xml
+#set_var "external_rtp_ip" "${CONTAINER_IP}\"\/>" /opt/freeswitch/conf/vars.xml
+#set_var "external_sip_ip" "${CONTAINER_IP}\"\/>" /opt/freeswitch/conf/vars.xml
+#sed -i -r "/ext-rtp-ip/s/(.*value*[=,:] *\").*/\1\$\$\{external_rtp_ip\}\"\/>/" /opt/freeswitch/conf/sip_profiles/external.xml
+#sed -i -r "/ext-sip-ip/s/(.*value*[=,:] *\").*/\1\$\$\{external_sip_ip\}\"\/>/" /opt/freeswitch/conf/sip_profiles/external.xml
 
 echo -e "\e[92mUpdating BigBlueButton IP address configuration...\e[0m"
 
