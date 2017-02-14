@@ -1,17 +1,17 @@
 nginx:
   image: juanluisbaptiste/bigbluebutton-proxy:latest
-    ports:
-      - "80:80"
-    volumes:
-      - /var/run/docker.sock:/tmp/docker.sock
+  ports:
+    - "80:80"
+  volumes:
+    - /var/run/docker.sock:/tmp/docker.sock
 
 bbb:
   image: juanluisbaptiste/bigbluebutton:latest
   expose:
-  - "80"
+    - "80"
   ports:
-  - "9123:9123"
-  - "1935:1935"
+    - "9123:9123"
+    - "1935:1935"
   environment:
      SERVER_NAME: bbb.example.com
      SERVER_SALT: 9ca422de042242084b36aa041f27d79e
