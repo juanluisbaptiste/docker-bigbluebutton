@@ -1,15 +1,19 @@
+nginx:
+  image: juanluisbaptiste/bigbluebutton-proxy:latest
+    ports:
+      - "80:80"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock
+
 bbb:
   image: juanluisbaptiste/bigbluebutton:latest
-  ports:
-   - "80:80"
   expose:
-  #- "80"
+  - "80"
+  ports:
   - "9123:9123"
   - "1935:1935"
   environment:
-      SERVER_NAME: meet.example.com
-      SERVER_SALT: 5ca422de042242086336aa041f26d79e
-      MOBILE_SALT: 03b07
-      VIRTUAL_HOST: meet.example.com
-      BBB_INSTALL_DEMOS: "yes"
-#  privileged: true
+     SERVER_NAME: bbb.example.com
+     SERVER_SALT: 9ca422de042242084b36aa041f27d79e
+     VIRTUAL_HOST: bbb.example.com
+     BBB_INSTALL_DEMOS: "yes"
