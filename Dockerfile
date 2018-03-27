@@ -26,9 +26,12 @@ RUN find /etc/systemd/system \
     systemctl set-default multi-user.target
 
 #Install BigBlueButton
-RUN apt-get install -y bigbluebutton
-RUN apt-get install -y bbb-check haveged
-
+# Install Tomcat prior to bbb installation
+RUN apt-get install -y default-jdk tomcat7 && \
+    mv /etc/init.d/tomcat7 / && \
+    echo "exit 0" > /etc/init.d/tomcat7 && chmod 755 /etc/init.d/tomcat7 && \
+    apt-get install -y --fix-missing --allow-unauthenticated bigbluebutton bbb-check haveged && \
+    mv /tomcat7 /etc/init.d/
 #EXPOSE 80 9123 1935 5060 5060/udp 5066 5066/udp 5080 5080/udp 16384-32768/udp
 EXPOSE 80 9123 1935
 
