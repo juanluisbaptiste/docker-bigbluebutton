@@ -1,21 +1,30 @@
-#nginx:
-  #image: jwilder/nginx-proxy:latest
-  #  build: nginx/
-  #  ports:
-  #    - "80:80"
-  #  volumes:
-  #    - /var/run/docker.sock:/tmp/docker.sock
+version: '2'
+services:
+  #nginx:
+    #image: jwilder/nginx-proxy:latest
+    #  build: nginx/
+    #  ports:
+    #    - "80:80"
+    #  volumes:
+    #    - /var/run/docker.sock:/tmp/docker.sock
 
-bbb:
-  build: .
-  ports:
-   - "80:80"
-   - "9123:9123"
-   - "1935:1935"
-   - "16384-16400:16384-16400/udp"
-  environment:
-      SERVER_NAME: meet.example.com
-      SERVER_SALT: 5ca422de042242086336aa041f26d79e
-      VIRTUAL_HOST: meet.example.com
-      BBB_INSTALL_DEMOS: "yes"
-  privileged: true
+  bbb:
+    build: .
+    ports:
+     - "80:80"
+     - "9123:9123"
+     - "1935:1935"
+     - "16384-16400:16384-16400/udp"
+    environment:
+        SERVER_NAME: meet.example.com
+        SERVER_SALT: 5ca422de042242086336aa041f26d79e
+        VIRTUAL_HOST: meet.example.com
+        BBB_INSTALL_DEMOS: "yes"
+    privileged: true
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    # cap_add:
+    #   - SYS_ADMIN
+    tmpfs:
+      - /run
+      - /run/lock

@@ -1,30 +1,29 @@
-FROM ubuntu:14.04
+FROM ubuntu:16.04
 MAINTAINER Juan Luis Baptiste juan.baptiste@gmail.com
 ENV DEBIAN_FRONTEND noninteractive
 ENV TERM linux
+ENV container docker
+ENV init /lib/systemd/systemd
 
-ADD deb/ffmpeg_2.3.3-1_amd64.deb .
 RUN apt-get -y update && \
-    apt-get install -y language-pack-en vim wget software-properties-common
-RUN echo "deb http://us.archive.ubuntu.com/ubuntu/ trusty multiverse" | tee -a /etc/apt/sources.list && \
-    wget http://ubuntu.bigbluebutton.org/bigbluebutton.asc -O- | apt-key add - && \
-    echo "deb http://ubuntu.bigbluebutton.org/trusty-1-0/ bigbluebutton-trusty main" | tee /etc/apt/sources.list.d/bigbluebutton.list && \
-    add-apt-repository ppa:libreoffice/libreoffice-4-4 && \
-    add-apt-repository -y ppa:ondrej/php && \
-    apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E5267A6C && \
+    apt-get install -y language-pack-en vim wget systemd net-tools software-properties-common \
+                       sudo apt-transport-https && \
+    update-locale LANG=en_US.UTF-8 && \
+    dpkg-reconfigure locales
+RUN echo "deb http://us.archive.ubuntu.com/ubuntu/ xenial multiverse" | tee -a /etc/apt/sources.list && \
     apt-get -y update && \
     apt-get -y dist-upgrade && \
-    update-locale LANG=en_US.UTF-8 && \
-    dpkg-reconfigure locales && \
-    apt-get install -y libvpx1 libvorbisenc2 libssl1.0.2 && \
-    dpkg -i ffmpeg_2.3.3-1_amd64.deb
-
-#RUN apt-get install -y build-essential git-core checkinstall yasm texi2html libvorbis-dev libx11-dev libxfixes-dev zlib1g-dev pkg-config
-
-# Install Tomcat prior to bbb installation
-RUN apt-get install -y tomcat7
-# Replace init script, installed one is broken
-ADD scripts/tomcat7 /etc/init.d/
+    wget http://ubuntu.bigbluebutton.org/bigbluebutton.asc -O- | apt-key add - && \
+    echo "deb https://ubuntu.bigbluebutton.org/xenial-200/ bigbluebutton-xenial main" | tee /etc/apt/sources.list.d/bigbluebutton.list && \
+    apt-get -y update
+RUN find /etc/systemd/system \
+    /lib/systemd/system \
+    -path '*.wants/*' \
+    -not -name '*journald*' \
+    -not -name '*systemd-tmpfiles*' \
+    -not -name '*systemd-user-sessions*' \
+    -exec rm \{} \; && \
+    systemctl set-default multi-user.target
 
 #Install BigBlueButton
 RUN apt-get install -y bigbluebutton
@@ -34,6 +33,13 @@ RUN apt-get install -y bbb-check haveged
 EXPOSE 80 9123 1935
 
 #Add helper script to start bbb
-ADD scripts/*.sh /
-RUN chmod 755 /bbb-start.sh
-CMD ["/bbb-start.sh"]
+COPY scripts/*.sh /
+RUN chmod 755 /*.sh && \
+    echo "#!/bin/bash\nenv\n/bbb-start.sh" > /etc/rc.local && \
+    chmod 755 /etc/rc.local
+
+VOLUME [ "/sys/fs/cgroup" ]
+
+ENTRYPOINT ["/lib/systemd/systemd"]
+CMD ["/bin/bash", "-c", "exec /sbin/init --log-target=journal 3>&1"]
+#CMD ["/run.sh"]

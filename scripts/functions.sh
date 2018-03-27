@@ -1,10 +1,11 @@
+#!/bin/bash
 
 function get_ip (){
     /sbin/ifconfig eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}'
 }
 
 # function set_quoted_var (){
-# 
+#
 # }
 
 function set_var(){
